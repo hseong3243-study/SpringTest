@@ -9,3 +9,8 @@
 `GET /api/hello`
 
 operation::Hello, World![snippets='http-request,http-response,response-fields']
+
+== 2. Optional!
+`GET /api/optional`
+
+operation::Hello, Optional![snippets='http-request,query-parameters,http-response']

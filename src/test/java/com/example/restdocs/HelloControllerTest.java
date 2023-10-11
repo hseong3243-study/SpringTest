@@ -7,7 +7,11 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,6 +46,24 @@ class HelloControllerTest {
                 preprocessResponse(prettyPrint()),
                 responseFields(
                     fieldWithPath("data").type(STRING).description("데이터")
+                )));
+    }
+
+    @Test
+    void helloOptional() throws Exception {
+        //when
+        ResultActions resultActions = mockMvc.perform(get("/api/optional")
+            .queryParam("required", "필수값"));
+
+        //then
+        resultActions.andDo(print())
+            .andExpect(status().isNoContent())
+            .andDo(document("Hello, Optional!",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                queryParameters(
+                    parameterWithName("required").description("필수값"),
+                    parameterWithName("value").description("문자열").optional()
                 )));
     }
 }
