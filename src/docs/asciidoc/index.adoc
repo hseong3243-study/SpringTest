@@ -1,0 +1,27 @@
+= API 문서
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== 1. Hello!
+`GET /api/hello`
+
+operation::Hello, World![snippets='http-request,http-response,response-fields']
+
+== 2. Optional!
+`GET /api/optional`
+
+operation::Hello, Optional![snippets='http-request,query-parameters,http-response']
+
+== 3. OptionalBody!
+`GET /api/optional-body`
+
+operation::Hello, OptionalBody![snippets='http-request,request-fields,http-response']
+
+== 4. Enum
+
+=== Provider
+
+include::{snippets}/Provider/custom-response-fields.adoc[]
