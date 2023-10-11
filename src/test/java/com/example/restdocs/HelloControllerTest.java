@@ -16,10 +16,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,6 +33,9 @@ class HelloControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
     void helloWorld() throws Exception {
@@ -64,6 +69,28 @@ class HelloControllerTest {
                 queryParameters(
                     parameterWithName("required").description("필수값"),
                     parameterWithName("value").description("문자열").optional()
+                )));
+    }
+
+    @Test
+    void helloOptionalBody() throws Exception {
+        //given
+        OptionalBody body = new OptionalBody("required", null);
+
+        //when
+        ResultActions resultActions = mockMvc.perform(get("/api/optional-body")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(body)));
+
+        //then
+        resultActions.andDo(print())
+            .andExpect(status().isNoContent())
+            .andDo(document("Hello, OptionalBody!",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                requestFields(
+                    fieldWithPath("required").type(STRING).description("필수값"),
+                    fieldWithPath("optional").type(STRING).description("옵셔널").optional()
                 )));
     }
 }

@@ -14,3 +14,8 @@ operation::Hello, World![snippets='http-request,http-response,response-fields']
 `GET /api/optional`
 
 operation::Hello, Optional![snippets='http-request,query-parameters,http-response']
+
+== 3. OptionalBody!
+`GET /api/optional-body`
+
+operation::Hello, OptionalBody![snippets='http-request,request-fields,http-response']
