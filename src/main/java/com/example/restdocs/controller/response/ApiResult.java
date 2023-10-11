@@ -1,4 +1,4 @@
-package com.example.restdocs;
+package com.example.restdocs.controller.response;
 
 public class ApiResult<T> {
     private final T data;
