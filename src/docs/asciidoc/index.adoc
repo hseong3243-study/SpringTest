@@ -1,0 +1,11 @@
+= API 문서
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== 1. Hello!
+`GET /api/hello`
+
+operation::Hello, World![snippets='http-request,http-response,response-fields']
